@@ -18,7 +18,7 @@ public class StationSpecs {
             .contentType(ContentType.JSON)
             .baseUri("https://api.openweathermap.org")
             .basePath("/data/3.0/stations")
-            .queryParam("appid", System.getProperty("apiKey"));
+            .queryParam("appid", System.getProperty("apiKey", System.getenv("API_KEY")));
 
     public static RequestSpecification wrongKeyRequestSpec = with()
             .filter(withCustomTemplates())
