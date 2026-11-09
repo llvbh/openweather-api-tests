@@ -10,6 +10,7 @@
 - <a href="#console">Запуск тестов из терминала</a>
 - <a href="#jenkins">Сборка в Jenkins</a>
 - <a href="#allure">Allure-отчет</a>
+- <a href="#testops">Ручные тест-кейсы в Allure TestOps</a>
 - <a href="#telegram">Уведомление в Telegram</a>
 
 <a id="tools"></a>
@@ -102,6 +103,17 @@
 
 <p align="center">
 <img title="Allure Tests" src="images/screen/allure-tests.png" width="850"/>
+</p>
+
+<p align="right"><a href="#readme-top">наверх</a></p>
+
+<a id="testops"></a>
+## [Ручные тест-кейсы в Allure TestOps](https://allure.qa.guru/project/5426/test-cases)
+
+Дополнительные проверки API описаны как ручные тест-кейсы в <code>Allure TestOps</code>.
+
+<p align="center">
+<img title="Allure TestOps" src="images/screen/testops-manual.png" width="850"/>
 </p>
 
 <p align="right"><a href="#readme-top">наверх</a></p>
