@@ -8,7 +8,9 @@
 - <a href="#tools">Использованные инструменты</a>
 - <a href="#cases">Реализованные тесты</a>
 - <a href="#console">Запуск тестов из терминала</a>
+- <a href="#jenkins">Сборка в Jenkins</a>
 - <a href="#allure">Allure-отчет</a>
+- <a href="#telegram">Уведомление в Telegram</a>
 
 <a id="tools"></a>
 ## :hammer_and_wrench: Использованные инструменты
@@ -21,6 +23,8 @@
 <a href="https://gradle.org/"><img src="images/logo/Gradle.png" width="50" height="50" alt="Gradle"/></a>
 <a href="https://rest-assured.io/"><img src="images/logo/RestAssured.png" width="50" height="50" alt="REST Assured"/></a>
 <a href="https://github.com/allure-framework"><img src="images/logo/Allure.svg" width="50" height="50" alt="Allure"/></a>
+<a href="https://www.jenkins.io/"><img src="images/logo/Jenkins.svg" width="50" height="50" alt="Jenkins"/></a>
+<a href="https://web.telegram.org/"><img src="images/logo/Telegram.svg" width="50" height="50" alt="Telegram"/></a>
 </p>
 
 Тесты написаны на языке <code>Java</code> с использованием <code>REST Assured</code>, сборщик — <code>Gradle</code>, запуск через <code>JUnit 5</code>.
@@ -29,6 +33,8 @@
 - модели на <code>Lombok</code> для тела запроса и для ответа
 - спецификации запросов и ответов
 - Allure-листенер со своими шаблонами запроса и ответа
+
+Для удаленного запуска сделана джоба в <code>Jenkins</code> с формированием Allure-отчета и отправкой результатов в <code>Telegram</code> при помощи бота.
 
 <a id="cases"></a>
 ## :ballot_box_with_check: Реализованные тесты
@@ -70,9 +76,43 @@
 
 <p align="right"><a href="#readme-top">наверх</a></p>
 
+<a id="jenkins"></a>
+## <img alt="Jenkins" height="25" src="images/logo/Jenkins.svg" width="25"/> Сборка в [Jenkins](https://jenkins.qa.guru/job/llvbh-openweather-api-tests/)
+
+<p align="center">
+<img src="images/screen/jenkins.png" alt="Jenkins" width="850"/>
+</p>
+
+### Параметры сборки в Jenkins:
+- `API_KEY` — API-ключ OpenWeatherMap
+- `TELEGRAM_TOKEN`, `TELEGRAM_CHAT` — токен бота и чат для уведомлений
+
+<p align="right"><a href="#readme-top">наверх</a></p>
+
 <a id="allure"></a>
-## <img alt="Allure" height="25" src="images/logo/Allure.svg" width="25"/> Allure-отчет
+## <img alt="Allure" height="25" src="images/logo/Allure.svg" width="25"/> [Allure-отчет](https://jenkins.qa.guru/job/llvbh-openweather-api-tests/allure/)
 
 В отчете для каждого теста есть шаги, запросы и ответы. API-ключ в адресах запросов заменяется на `***`.
+
+<p align="center">
+<img title="Allure Overview" src="images/screen/allure.png" width="850"/>
+</p>
+
+### Тест-кейсы
+
+<p align="center">
+<img title="Allure Tests" src="images/screen/allure-tests.png" width="850"/>
+</p>
+
+<p align="right"><a href="#readme-top">наверх</a></p>
+
+<a id="telegram"></a>
+## <img alt="Telegram" height="25" src="images/logo/Telegram.svg" width="25"/> Уведомление в Telegram при помощи бота
+
+После выполнения тестов бот отправляет сообщение с результатами прогона.
+
+<p align="center">
+<img title="Telegram" src="images/screen/telegram.png" width="550"/>
+</p>
 
 <p align="right"><a href="#readme-top">наверх</a></p>
