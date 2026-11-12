@@ -11,7 +11,13 @@ import org.openweather.models.StationRequestModel;
 import org.openweather.models.StationResponseModel;
 import org.openweather.models.UnauthorizedResponseModel;
 
+import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.openweather.helpers.TestData.BAD_ID;
+import static org.openweather.helpers.TestData.INVALID_API_KEY;
+import static org.openweather.helpers.TestData.NOT_EXISTING_ID;
+import static org.openweather.helpers.TestData.STATION_ID_NOT_VALID;
+import static org.openweather.helpers.TestData.STATION_NOT_FOUND;
 
 @Owner("llvbh")
 @DisplayName("Получение станции")
@@ -26,9 +32,16 @@ public class GetStationTests extends TestBase {
 
         StationResponseModel response = stationApi.getStation(stationId);
 
-        assertThat(response.getId()).isEqualTo(stationId);
-        assertThat(response.getExternalId()).isEqualTo(station.getExternalId());
-        assertThat(response.getName()).isEqualTo(station.getName());
+        step("Проверяем параметры полученной станции", () ->
+                assertThat(response)
+                        .extracting(
+                                StationResponseModel::getId,
+                                StationResponseModel::getExternalId,
+                                StationResponseModel::getName)
+                        .containsExactly(
+                                stationId,
+                                station.getExternalId(),
+                                station.getName()));
     }
 
     @Test
@@ -39,25 +52,28 @@ public class GetStationTests extends TestBase {
 
         StationResponseModel[] stations = stationApi.getStations();
 
-        assertThat(stations).extracting(StationResponseModel::getId).contains(stationId);
+        step("Проверяем, что станция есть в списке", () ->
+                assertThat(stations).extracting(StationResponseModel::getId).contains(stationId));
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Нельзя получить несуществующую станцию")
     void getNotExistingStationTest() {
-        ErrorResponseModel response = stationApi.getStationWithError("000000000000000000000000", 404);
+        ErrorResponseModel response = stationApi.getStationWithError(NOT_EXISTING_ID, 404);
 
-        assertThat(response.getMessage()).isEqualTo("Station not found");
+        step("Проверяем сообщение об ошибке", () ->
+                assertThat(response.getMessage()).isEqualTo(STATION_NOT_FOUND));
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Нельзя получить станцию с неправильным id")
     void getStationWithBadIdTest() {
-        ErrorResponseModel response = stationApi.getStationWithError("abc", 400);
+        ErrorResponseModel response = stationApi.getStationWithError(BAD_ID, 400);
 
-        assertThat(response.getMessage()).isEqualTo("Station id not valid");
+        step("Проверяем сообщение об ошибке", () ->
+                assertThat(response.getMessage()).isEqualTo(STATION_ID_NOT_VALID));
     }
 
     @Test
@@ -66,7 +82,9 @@ public class GetStationTests extends TestBase {
     void getStationsWithWrongKeyTest() {
         UnauthorizedResponseModel response = stationApi.getStationsWithWrongKey();
 
-        assertThat(response.getCod()).isEqualTo(401);
-        assertThat(response.getMessage()).contains("Invalid API key");
+        step("Проверяем код и сообщение об ошибке", () -> {
+            assertThat(response.getCod()).isEqualTo(401);
+            assertThat(response.getMessage()).contains(INVALID_API_KEY);
+        });
     }
 }

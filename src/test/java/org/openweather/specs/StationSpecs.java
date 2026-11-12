@@ -11,22 +11,14 @@ import static org.openweather.helpers.CustomAllureListener.withCustomTemplates;
 
 public class StationSpecs {
 
-    public static RequestSpecification requestSpec = with()
-            .filter(withCustomTemplates())
-            .log().method()
-            .log().body()
-            .contentType(ContentType.JSON)
-            .baseUri("https://api.openweathermap.org")
-            .basePath("/data/3.0/stations")
-            .queryParam("appid", System.getProperty("apiKey", System.getenv("API_KEY")));
-
-    public static RequestSpecification wrongKeyRequestSpec = with()
-            .filter(withCustomTemplates())
-            .log().method()
-            .contentType(ContentType.JSON)
-            .baseUri("https://api.openweathermap.org")
-            .basePath("/data/3.0/stations")
-            .queryParam("appid", "wrong_key");
+    public static RequestSpecification requestSpec(String apiKey) {
+        return with()
+                .filter(withCustomTemplates())
+                .log().method()
+                .log().body()
+                .contentType(ContentType.JSON)
+                .queryParam("appid", apiKey);
+    }
 
     public static ResponseSpecification responseSpec(int statusCode) {
         return new ResponseSpecBuilder()

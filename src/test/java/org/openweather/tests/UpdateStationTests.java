@@ -9,7 +9,10 @@ import org.openweather.helpers.TestData;
 import org.openweather.models.StationRequestModel;
 import org.openweather.models.StationResponseModel;
 
+import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.openweather.helpers.TestData.NEW_ALTITUDE;
+import static org.openweather.helpers.TestData.NEW_NAME;
 
 @Owner("llvbh")
 @DisplayName("Изменение станции")
@@ -22,12 +25,14 @@ public class UpdateStationTests extends TestBase {
         StationRequestModel station = TestData.getStation();
         stationId = stationApi.createStation(station).getId();
 
-        station.setName("Станция Астана");
-        station.setAltitude(350);
+        station.setName(NEW_NAME);
+        station.setAltitude(NEW_ALTITUDE);
         stationApi.updateStation(stationId, station);
 
         StationResponseModel response = stationApi.getStation(stationId);
-        assertThat(response.getName()).isEqualTo("Станция Астана");
-        assertThat(response.getAltitude()).isEqualTo(350);
+        step("Проверяем новое название и высоту станции", () ->
+                assertThat(response)
+                        .extracting(StationResponseModel::getName, StationResponseModel::getAltitude)
+                        .containsExactly(NEW_NAME, NEW_ALTITUDE));
     }
 }

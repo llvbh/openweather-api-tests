@@ -12,7 +12,10 @@ import org.openweather.models.CreateStationResponseModel;
 import org.openweather.models.ErrorResponseModel;
 import org.openweather.models.StationRequestModel;
 
+import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.openweather.helpers.TestData.BAD_EXTERNAL_ID;
+import static org.openweather.helpers.TestData.BAD_NAME;
 
 @Owner("llvbh")
 @DisplayName("Создание станции")
@@ -27,12 +30,22 @@ public class CreateStationTests extends TestBase {
         CreateStationResponseModel response = stationApi.createStation(station);
         stationId = response.getId();
 
-        assertThat(response.getId()).isNotBlank();
-        assertThat(response.getExternalId()).isEqualTo(station.getExternalId());
-        assertThat(response.getName()).isEqualTo(station.getName());
-        assertThat(response.getLatitude()).isEqualTo(station.getLatitude());
-        assertThat(response.getLongitude()).isEqualTo(station.getLongitude());
-        assertThat(response.getAltitude()).isEqualTo(station.getAltitude());
+        step("Проверяем параметры созданной станции", () -> {
+            assertThat(response.getId()).isNotBlank();
+            assertThat(response)
+                    .extracting(
+                            CreateStationResponseModel::getExternalId,
+                            CreateStationResponseModel::getName,
+                            CreateStationResponseModel::getLatitude,
+                            CreateStationResponseModel::getLongitude,
+                            CreateStationResponseModel::getAltitude)
+                    .containsExactly(
+                            station.getExternalId(),
+                            station.getName(),
+                            station.getLatitude(),
+                            station.getLongitude(),
+                            station.getAltitude());
+        });
     }
 
     @Test
@@ -44,7 +57,8 @@ public class CreateStationTests extends TestBase {
 
         ErrorResponseModel response = stationApi.createStationWithError(station);
 
-        assertThat(response.getMessage()).isEqualTo("Bad external id");
+        step("Проверяем сообщение об ошибке", () ->
+                assertThat(response.getMessage()).isEqualTo(BAD_EXTERNAL_ID));
     }
 
     @Test
@@ -56,7 +70,8 @@ public class CreateStationTests extends TestBase {
 
         ErrorResponseModel response = stationApi.createStationWithError(station);
 
-        assertThat(response.getMessage()).isEqualTo("Bad or zero length station name");
+        step("Проверяем сообщение об ошибке", () ->
+                assertThat(response.getMessage()).isEqualTo(BAD_NAME));
     }
 
     @ParameterizedTest(name = "Станция не создается с координатами {0} и {1}")
@@ -72,6 +87,7 @@ public class CreateStationTests extends TestBase {
 
         ErrorResponseModel response = stationApi.createStationWithError(station);
 
-        assertThat(response.getMessage()).isEqualTo(message);
+        step("Проверяем сообщение об ошибке", () ->
+                assertThat(response.getMessage()).isEqualTo(message));
     }
 }

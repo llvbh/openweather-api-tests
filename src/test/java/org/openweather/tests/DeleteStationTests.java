@@ -8,7 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.openweather.helpers.TestData;
 import org.openweather.models.ErrorResponseModel;
 
+import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.openweather.helpers.TestData.NOT_EXISTING_ID;
+import static org.openweather.helpers.TestData.STATION_NOT_FOUND;
 
 @Owner("llvbh")
 @DisplayName("Удаление станции")
@@ -23,15 +26,17 @@ public class DeleteStationTests extends TestBase {
         stationApi.deleteStation(id);
 
         ErrorResponseModel response = stationApi.getStationWithError(id, 404);
-        assertThat(response.getMessage()).isEqualTo("Station not found");
+        step("Проверяем, что станция не найдена", () ->
+                assertThat(response.getMessage()).isEqualTo(STATION_NOT_FOUND));
     }
 
     @Test
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Нельзя удалить несуществующую станцию")
     void deleteNotExistingStationTest() {
-        ErrorResponseModel response = stationApi.deleteStationWithError("000000000000000000000000");
+        ErrorResponseModel response = stationApi.deleteStationWithError(NOT_EXISTING_ID);
 
-        assertThat(response.getMessage()).isEqualTo("Station not found");
+        step("Проверяем сообщение об ошибке", () ->
+                assertThat(response.getMessage()).isEqualTo(STATION_NOT_FOUND));
     }
 }
