@@ -1,4 +1,8 @@
 <a id="readme-top"></a>
+<p align="center">
+<a href="https://openweathermap.org/"><img src="images/logo/OpenWeather.svg" width="300" alt="OpenWeather"/></a>
+</p>
+
 # Проект по автоматизации тестирования API <a href="https://openweathermap.org/stations">OpenWeatherMap Stations</a>
 
 > OpenWeatherMap — сервис с данными о погоде. Weather Stations API позволяет создавать свои метеостанции и управлять ими
@@ -10,7 +14,7 @@
 - <a href="#console">Запуск тестов из терминала</a>
 - <a href="#jenkins">Сборка в Jenkins</a>
 - <a href="#allure">Allure-отчет</a>
-- <a href="#testops">Ручные тест-кейсы в Allure TestOps</a>
+- <a href="#testops">Интеграция с Allure TestOps</a>
 - <a href="#jira">Интеграция с Jira</a>
 - <a href="#telegram">Уведомление в Telegram</a>
 
@@ -25,6 +29,8 @@
 <a href="https://gradle.org/"><img src="images/logo/Gradle.png" width="50" height="50" alt="Gradle"/></a>
 <a href="https://rest-assured.io/"><img src="images/logo/RestAssured.png" width="50" height="50" alt="REST Assured"/></a>
 <a href="https://github.com/allure-framework"><img src="images/logo/Allure.svg" width="50" height="50" alt="Allure"/></a>
+<a href="https://qameta.io/"><img src="images/logo/Allure_TO.svg" width="50" height="50" alt="Allure TestOps"/></a>
+<a href="https://www.atlassian.com/software/jira"><img src="images/logo/Jira.svg" width="50" height="50" alt="Jira"/></a>
 <a href="https://www.jenkins.io/"><img src="images/logo/Jenkins.svg" width="50" height="50" alt="Jenkins"/></a>
 <a href="https://web.telegram.org/"><img src="images/logo/Telegram.svg" width="50" height="50" alt="Telegram"/></a>
 </p>
@@ -109,12 +115,26 @@
 <p align="right"><a href="#readme-top">наверх</a></p>
 
 <a id="testops"></a>
-## [Ручные тест-кейсы в Allure TestOps](https://allure.qa.guru/project/5426/test-cases)
+## <img alt="Allure TestOps" height="25" src="images/logo/Allure_TO.svg" width="25"/> Интеграция с [Allure TestOps](https://allure.qa.guru/project/5426/dashboards)
 
-Дополнительные проверки API описаны как ручные тест-кейсы в <code>Allure TestOps</code>.
+Результаты каждой сборки в <code>Jenkins</code> загружаются в <code>Allure TestOps</code>. Дополнительные проверки API описаны там же как ручные тест-кейсы.
+
+### Дашборд
 
 <p align="center">
-<img title="Allure TestOps" src="images/screen/testops-manual.png" width="850"/>
+<img title="Allure TestOps Dashboard" src="images/screen/testops-dashboard.png" width="850"/>
+</p>
+
+### Запуск тестов
+
+<p align="center">
+<img title="Allure TestOps Launch" src="images/screen/testops-launch.png" width="850"/>
+</p>
+
+### Автоматизированные и ручные тест-кейсы
+
+<p align="center">
+<img title="Allure TestOps Test Cases" src="images/screen/testops-cases.png" width="850"/>
 </p>
 
 <p align="right"><a href="#readme-top">наверх</a></p>
